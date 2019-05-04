@@ -3,39 +3,39 @@ version: '2'
 services:
   config-server:
     image: mszarlinski/spring-cloud-config-server
-    container_name: config-server
+    container_name: spring-cloud-config-server
     mem_limit: 512M
     ports:
      - 8888:8888
 
   discovery-server:
     image: mszarlinski/spring-cloud-discovery-server
-    container_name: discovery-server
+    container_name: spring-cloud-discovery-server
     mem_limit: 512M
     depends_on:
-      - config-server
+      - spring-cloud-config-server
     entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8761:8761
 
   user-service:
     image: mszarlinski/spring-cloud-user-service
-    container_name: user-service
+    container_name: spring-cloud-user-service
     mem_limit: 512M
     depends_on:
-     - config-server
-     - discovery-server
+     - spring-cloud-config-server
+     - spring-cloud-discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
     - 8081:8081
     
   user-gateway:
     image: mszarlinski/spring-cloud-user-gateway
-    container_name: user-gateway
+    container_name: spring-cloud-user-gateway
     mem_limit: 512M
     depends_on:
-     - config-server
-     - discovery-server
+     - spring-cloud-config-server
+     - spring-cloud-discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8080:8080
@@ -43,11 +43,11 @@ services:
 
   admin-server:
     image: mszarlinski/spring-cloud-admin-server
-    container_name: admin-server
+    container_name: spring-cloud-admin-server
     mem_limit: 512M
     depends_on:
-     - config-server
-     - discovery-server
+     - spring-cloud-config-server
+     - spring-cloud-discovery-server
     entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 9090:9090
