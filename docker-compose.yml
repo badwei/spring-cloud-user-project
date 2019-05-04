@@ -2,14 +2,14 @@ version: '2'
 
 services:
   config-server:
-    image: bigbook/spring-cloud-config-server
+    image: mszarlinski/spring-cloud-config-server
     container_name: config-server
     mem_limit: 512M
     ports:
      - 8888:8888
 
   discovery-server:
-    image: bigbook/spring-cloud-discovery-server
+    image: mszarlinski/spring-cloud-discovery-server
     container_name: discovery-server
     mem_limit: 512M
     depends_on:
@@ -19,7 +19,7 @@ services:
      - 8761:8761
 
   user-service:
-    image: bigbook/spring-cloud-user-service
+    image: mszarlinski/spring-cloud-user-service
     container_name: user-service
     mem_limit: 512M
     depends_on:
@@ -30,7 +30,7 @@ services:
     - 8081:8081
     
   user-gateway:
-    image: bigbook/spring-cloud-user-gateway
+    image: mszarlinski/spring-cloud-user-gateway
     container_name: user-gateway
     mem_limit: 512M
     depends_on:
@@ -41,7 +41,7 @@ services:
      - 8080:8080
 
   tracing-server:
-    image: openzipkin/zipkin
+    image: mszarlinski/zipkin
     container_name: tracing-server
     mem_limit: 512M
     environment:
@@ -50,7 +50,7 @@ services:
      - 9411:9411
 
   admin-server:
-    image: bigbook/spring-cloud-admin-server
+    image: mszarlinski/spring-cloud-admin-server
     container_name: admin-server
     mem_limit: 512M
     depends_on:
@@ -61,7 +61,7 @@ services:
      - 9090:9090
 
   hystrix-dashboard:
-    image: bigbook/spring-cloud-hystrix-dashboard
+    image: mszarlinski/spring-cloud-hystrix-dashboard
     container_name: hystrix-dashboard
     mem_limit: 512M
     depends_on:

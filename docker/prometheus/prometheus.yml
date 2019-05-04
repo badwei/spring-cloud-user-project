@@ -11,22 +11,12 @@ scrape_configs:
   static_configs:
   - targets: ['localhost:9090']
 
-- job_name: api-gateway
+- job_name: user-gateway
   metrics_path: /actuator/prometheus
   static_configs:
-  - targets: ['api-gateway:8080']
+  - targets: ['user-gateway:8080']
 
-- job_name: customers-service
+- job_name: user-service
   metrics_path: /actuator/prometheus
   static_configs:
-  - targets: ['customers-service:8081']
-
-- job_name: visits-service
-  metrics_path: /actuator/prometheus
-  static_configs:
-  - targets: ['visits-service:8082']
-
-- job_name: vets-service
-  metrics_path: /actuator/prometheus
-  static_configs:
-  - targets: ['vets-service:8083']
+  - targets: ['user-service:8081']
